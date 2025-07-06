@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fear†Killer Council ID</title>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <style>
+    body {
+      background: #0b0b0b;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+      color: #00ffe7;
+    }
+
+    select {
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      background: #111;
+      color: #00ffe7;
+      border: 2px solid #00ffe7;
+      border-radius: 6px;
+    }
+
+    .id-card {
+      width: 700px;
+      height: 260px;
+      background: linear-gradient(135deg, #111, #1a1a1a);
+      border: 2px solid #00ffe7;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding: 16px;
+      box-shadow: 0 0 20px #00ffe744;
+      transition: all 0.3s ease;
+    }
+
+    .id-card.dark {
+      background: radial-gradient(circle at top left, #0a0a0a, #1e0033);
+      border-color: #9e00ff;
+      box-shadow: 0 0 30px #9900ff88;
+      color: #e2ccff;
+    }
+
+    .id-card.ember {
+      background: linear-gradient(135deg, #2b0000, #4a1a00);
+      border-color: #ff4500;
+      box-shadow: 0 0 30px #ff450088;
+      color: #ffcca8;
+    }
+
+    .id-card.silver {
+      background: linear-gradient(135deg, #1f1f1f, #3a3a3a);
+      border-color: #00f0ff;
+      box-shadow: 0 0 30px #00f0ff88;
+      color: #c9f8ff;
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+    }
+
+    .logo {
+      width: 55px;
+      height: 55px;
+    }
+
+    .content {
+      display: flex;
+      margin-top: 25px;
+      flex: 1;
+    }
+
+    .photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      background-color: #111;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid #00ffe7;
+      margin-right: 20px;
+      margin-top: 10px;
+    }
+
+    .info {
+      display: flex;
+      flex: 1;
+      gap: 40px;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .field {
+      margin: 3px 0;
+      font-size: 14px;
+    }
+
+    .field span {
+      font-weight: bold;
+      color: #00ffcc;
+    }
+
+    .editable {
+      display: inline-block;
+      padding: 2px 4px;
+      border-bottom: 1px dashed #00ffe7;
+      min-width: 40px;
+    }
+
+    .qr {
+      width: 70px;
+      height: 70px;
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 10px 20px;
+      background: #00ffe7;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <select id="cardType" onchange="changeCardStyle(this.value)">
+    <option value="default">Default</option>
+    <option value="dark">Dark Matter</option>
+    <option value="ember">Ember Core</option>
+    <option value="silver">Silver Protocol</option>
+  </select>
+
+  <div class="id-card" id="card">
+    <div class="top-bar">
+      <img src="https://via.placeholder.com/60x60.png?text=LOGO" class="logo" />
+    </div>
+
+    <div class="content">
+      <div class="photo" style="background-image: url('https://via.placeholder.com/100');"></div>
+
+      <div class="info">
+        <div class="column">
+          <div class="field"><span>Name:</span> <div contenteditable="true" class="editable">Tanmay</div></div>
+          <div class="field"><span>Age:</span> <div contenteditable="true" class="editable">16</div></div>
+          <div class="field"><span>Gender:</span> <div contenteditable="true" class="editable">Male</div></div>
+          <div class="field"><span>Speciality:</span> <div contenteditable="true" class="editable">Tactical Ops</div></div>
+        </div>
+
+        <div class="column">
+          <div class="field"><span>Council ID:</span> <div contenteditable="true" class="editable">FKC-LD-WM-001-KX</div></div>
+          <div class="field"><span>Roles:</span> <div contenteditable="true" class="editable">Leader, War Minister</div></div>
+          <div class="field"><span>Issued:</span> <div contenteditable="true" class="editable">2025-06-27</div></div>
+          <div class="field"><span>Valid Till:</span> <div contenteditable="true" class="editable">2026-06-27</div></div>
+        </div>
+      </div>
+    </div>
+
+    <img src="https://via.placeholder.com/70x70.png?text=QR" class="qr" />
+  </div>
+
+  <button onclick="downloadCard()">Download as PNG</button>
+
+  <script>
+    function changeCardStyle(type) {
+      const card = document.getElementById("card");
+      card.className = "id-card";
+      if (type !== "default") card.classList.add(type);
+    }
+
+    function downloadCard() {
+      html2canvas(document.getElementById("card")).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'Council-ID.png';
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+  </script>
+
+</body>
+</html>
